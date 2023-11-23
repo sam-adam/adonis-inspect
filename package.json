@@ -1,0 +1,27 @@
+{
+  "name": "adonis-inspect",
+  "version": "1.0.0",
+  "description": "Package to inspect AdonisJS requests",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "adonisjs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/your-adonis-extension.git"
+  },
+  "author": "Samuel Adam Suhendra",
+  "contributors": [
+    "Samuel Adam Suhendra <samuel.suhendra@gmail.com>"
+  ],
+  "devDependencies": {
+    "@adonisjs/fold": "^4.0.9",
+    "@adonisjs/sink": "^1.0.17",
+    "@adonisjs/framework": "5.0.13",
+    "tailwindcss": "^2.0.0"
+  },
+  "license": "MIT"
+}

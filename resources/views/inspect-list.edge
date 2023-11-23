@@ -1,0 +1,35 @@
+@layout('inspect-template')
+
+@section('content')
+<div class="bg-white p-8 rounded shadow-md">
+  <h1 class="text-2xl font-bold mb-4">
+    Request Lists
+  </h1>
+  <ul role="list" class="divide-y divide-gray-100">
+    @each(request in manifest.requests)
+      <li class="bordered rounded-sm shadow-sm flex flex-row gap-x-6 px-2 py-4">
+        <div>
+          @if(request.method === 'GET')
+            <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+              GET
+            </span>
+          @else
+            <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+              {{ request.method }}
+            </span>
+          @endif
+        </div>
+        <div class="flex-1 text-left">
+          <a href="/_inspect/{{ request.id }}">
+            {{ request.url }}
+          </a>
+        </div>
+        <div class="text-right">
+          {{ shortDate(request.timestamp) }}
+        </div>
+      </li>
+    @endeach
+  </ul>
+
+</div>
+@endsection

@@ -1,0 +1,89 @@
+@layout('inspect-template')
+
+@section('content')
+<div class="bg-white p-8 rounded shadow-md">
+  <h1 class="text-2xl font-bold mb-4">
+    Request Info
+  </h1>
+  <hr class="py-4">
+  <div class="px-4 pb-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">
+    <dt class="text-sm font-medium leading-6 text-gray-900">
+      Request ID
+    </dt>
+    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0">
+      {{ req.request.id }}
+    </dd>
+  </div>
+  <div class="px-4 pb-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">
+    <dt class="text-sm font-medium leading-6 text-gray-900">
+      Request Time
+    </dt>
+    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0">
+      Start: {{ req.timestamp }}, Duration: {{ req.duration / 1000 }} seconds
+    </dd>
+  </div>
+  <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">
+    <dt class="text-sm font-medium leading-6 text-gray-900">
+      Request Method 
+    </dt>
+    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0">
+      {{ req.request.method }}
+    </dd>
+  </div>
+  <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">
+    <dt class="text-sm font-medium leading-6 text-gray-900">
+      Request URL
+    </dt>
+    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0">
+      {{ req.request.url }}
+    </dd>
+  </div>
+  <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 items-center">
+    <dt class="text-sm font-medium leading-6 text-gray-900">
+      Request Headers
+    </dt>
+    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0">
+      <pre class="bg-gray-200 p-4">{{ jsonify(req.request.headers) }}</pre>
+    </dd>
+  </div>
+  <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 items-center">
+    <dt class="text-sm font-medium leading-6 text-gray-900">
+      Request Params
+    </dt>
+    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0">
+      <pre class="bg-gray-200 p-4">{{ jsonify(req.request.get) }}</pre>
+    </dd>
+  </div>
+  <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 items-center">
+    <dt class="text-sm font-medium leading-6 text-gray-900">
+      Request Body
+    </dt>
+    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0">
+      <pre class="bg-gray-200 p-4">{{ jsonify(req.request.post) }}</pre>
+    </dd>
+  </div>
+</div>
+<div class="bg-white p-8 rounded shadow-md mt-4">
+  <h1 class="text-2xl font-bold mb-4">
+     {{ req.queries.length }} Queries, Total Duration: {{ queriesDuration / 1000 }} seconds
+  </h1>
+  <hr class="py-4">
+  <ul role="list" class="divide-y divide-gray-100">
+    @each(query in req.queries)
+      <li class="bordered rounded-sm shadow flex flex-row gap-x-6 px-2 py-4">
+        <div>
+          <p class="font-medium text-sm">Duration</p>
+          {{ query.duration }} ms
+        </div>
+        <div class="flex-1 text-left max-w-full">
+          <p class="font-medium text-sm">Query</p>
+          <pre class="w-full max-w-full bg-gray-200 p-4 overflow-scroll">{{ query.sql }}</pre>
+          <br>
+          <p class="font-medium text-sm">Bindings</p>
+          <pre class="bg-gray-200 p-4">{{ jsonify(query.bindings) }}</pre>
+        </div>
+      </li>
+    @endeach
+  </ul>
+</div>
+@endsection

@@ -1,0 +1,17 @@
+<html>
+<head>
+  <title>{{ title || 'AdonisJS Inspect' }}</title>
+  <style type="text/css">
+    {{{ tailwindcss }}}
+
+    body {
+      background-color: #EEEEEE;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex">
+  <div id="app" class="container my-10 mx-auto font-sans">
+    @!section('content')
+  </div>
+</body>
+</html>
