@@ -23,5 +23,8 @@
     "@adonisjs/framework": "5.0.13",
     "tailwindcss": "^2.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "sql-formatter": "^14.0.0"
+  }
 }

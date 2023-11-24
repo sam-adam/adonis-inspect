@@ -43,7 +43,16 @@
       Request Headers
     </dt>
     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0">
-      <pre class="bg-gray-200 p-4">{{ jsonify(req.request.headers) }}</pre>
+      <table class="table table-auto bg-gray-100">
+        <tbody>
+          @each((value, key) in req.request.headers)
+          <tr>
+            <td class="border p-2">{{ key }}</td>
+            <td class="border p-2">{{ value }}</td>
+          </tr>
+          @endeach
+        </tbody>
+      </table>
     </dd>
   </div>
   <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 items-center">
@@ -75,12 +84,12 @@
           <p class="font-medium text-sm">Duration</p>
           {{ query.duration }} ms
         </div>
-        <div class="flex-1 text-left max-w-full">
+        <div class="flex-1 text-left min-w-0">
           <p class="font-medium text-sm">Query</p>
-          <pre class="w-full max-w-full bg-gray-200 p-4 overflow-scroll">{{ query.sql }}</pre>
+          <pre class="w-full max-w-full bg-gray-200 p-4 overflow-scroll">{{ formatQuery(query.sql) }}</pre>
           <br>
           <p class="font-medium text-sm">Bindings</p>
-          <pre class="bg-gray-200 p-4">{{ jsonify(query.bindings) }}</pre>
+          <pre class="bg-gray-200 p-4 overflow-scroll">{{ jsonify(query.bindings) }}</pre>
         </div>
       </li>
     @endeach

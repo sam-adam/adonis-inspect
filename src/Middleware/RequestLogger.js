@@ -2,7 +2,13 @@
 
 class RequestLogger {
   async handle({ request }, next) {
+    // prevent logging self
     if (request.originalUrl().indexOf('/_inspect') === 0) {
+      return next();
+    }
+
+    // prevent logging file requests
+    if (request.originalUrl().match(/\/[^\/]+(\.[a-zA-Z]+)$/)) {
       return next();
     }
 

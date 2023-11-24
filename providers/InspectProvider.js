@@ -36,6 +36,11 @@ class InspectProvider extends ServiceProvider {
       inspectView.global('jsonify', function (obj) {
         return JSON.stringify(obj);
       });
+      inspectView.global('formatQuery', function (query) {
+        const { format } = require('sql-formatter');
+
+        return format(query, {language: 'mysql'});
+      });
       inspectView.global('shortDate', function (dateStr) {
         const options = {
           year: 'numeric',
