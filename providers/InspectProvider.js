@@ -34,7 +34,7 @@ class InspectProvider extends ServiceProvider {
       inspectView.engine.registerViews(__dirname + '/../resources/views');
       inspectView.global('tailwindcss', fs.readFileSync(__dirname + '/../public/css/main.css'));
       inspectView.global('jsonify', function (obj) {
-        return JSON.stringify(obj);
+        return JSON.stringify(obj, null, 2);
       });
       inspectView.global('formatQuery', function (query) {
         const { format } = require('sql-formatter');

@@ -1,7 +1,10 @@
 'use strict';
 
 class RequestLogger {
-  async handle({ request }, next) {
+  async after({ response }) {
+    console.log('After', response)
+  }
+  async handle({ request, response }, next) {
     // prevent logging self
     if (request.originalUrl().indexOf('/_inspect') === 0) {
       return next();
@@ -53,7 +56,19 @@ class RequestLogger {
 
     await next();
 
+    let responseBody = response.lazyBody.content;
+    let responseStr = responseBody;
+
+    if (responseBody instanceof Error) {
+      responseStr = responseBody.message.toString();
+    }
+
     logData['duration'] = new Date() - start;
+    logData['response'] = {
+      headers: response.response.headers,
+      code: response.response.statusCode,
+      body: responseStr
+    }
 
     let manifest = {
       requests: []
@@ -70,6 +85,7 @@ class RequestLogger {
       timestamp: start,
       method: request.method(),
       url: request.originalUrl(),
+      responseCode: response.response.statusCode,
       logFile: logFilePath
     });
 

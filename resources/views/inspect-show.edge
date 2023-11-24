@@ -72,6 +72,45 @@
     </dd>
   </div>
 </div>
+<div class="bg-white p-8 rounded shadow-md">
+  <h1 class="text-2xl font-bold mb-4">
+    Response Info
+  </h1>
+  <hr class="py-4">
+  <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">
+    <dt class="text-sm font-medium leading-6 text-gray-900">
+      Response Code
+    </dt>
+    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0">
+      {{ req.response.code }}
+    </dd>
+  </div>
+  <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 items-center">
+    <dt class="text-sm font-medium leading-6 text-gray-900">
+      Response Headers
+    </dt>
+    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0">
+      <table class="table table-auto bg-gray-100">
+        <tbody>
+          @each((value, key) in req.response.headers)
+          <tr>
+            <td class="border p-2">{{ key }}</td>
+            <td class="border p-2">{{ value }}</td>
+          </tr>
+          @endeach
+        </tbody>
+      </table>
+    </dd>
+  </div>
+  <div class="px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 items-center">
+    <dt class="text-sm font-medium leading-6 text-gray-900">
+      Response Body
+    </dt>
+    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0 min-w-0">
+      <pre class="bg-gray-200 p-4 overflow-scroll">{{ jsonify(req.response.body) }}</pre>
+    </dd>
+  </div>
+</div>
 <div class="bg-white p-8 rounded shadow-md mt-4">
   <h1 class="text-2xl font-bold mb-4">
      {{ req.queries.length }} Queries, Total Duration: {{ queriesDuration / 1000 }} seconds
