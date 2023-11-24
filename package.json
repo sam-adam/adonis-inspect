@@ -1,23 +1,26 @@
 {
-  "name": "adonis-inspect",
+  "name": "@suhendra/adonis-inspect",
   "version": "1.0.0",
-  "description": "Package to inspect AdonisJS requests",
+  "description": "Inspect AdonisJS 4.1 requests",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "adonisjs"
+    "adonisjs",
+    "adonisjs 4",
+    "inspect"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yourusername/your-adonis-extension.git"
-  },
   "author": "Samuel Adam Suhendra",
   "contributors": [
     "Samuel Adam Suhendra <samuel.suhendra@gmail.com>"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sam-adam/adonis-inspect.git"
+  },
   "devDependencies": {
+    "@adonisjs/ace": "^5.0.8",
     "@adonisjs/fold": "^4.0.9",
     "@adonisjs/sink": "^1.0.17",
     "@adonisjs/framework": "5.0.13",
@@ -26,5 +29,9 @@
   "license": "MIT",
   "dependencies": {
     "sql-formatter": "^14.0.0"
+  },
+  "homepage": "https://github.com/sam-adam/adonis-inspect#readme",
+  "bugs": {
+    "url": "https://github.com/sam-adam/adonis-inspect/issues"
   }
 }

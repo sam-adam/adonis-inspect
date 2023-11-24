@@ -62,6 +62,10 @@ class InspectProvider extends ServiceProvider {
     });
   }
 
+  _registerCommands () {
+    this.app.bind('Adonis/Commands/InspectCleanCommand', () => require('../src/Commands/CleanCommand'));
+  }
+
   /** 
    * Register bindings
    *
@@ -78,6 +82,7 @@ class InspectProvider extends ServiceProvider {
       this._registerRequestLogger();
       this._registerControllers();
       this._registerViews();
+      this._registerCommands();
     }
   }
 
@@ -92,7 +97,9 @@ class InspectProvider extends ServiceProvider {
     if (this.isEnabled) {
       const Server = this.app.use('Server');
       const Route = use('Route');
+      const ace = require('@adonisjs/ace')
 
+      ace.addCommand('Adonis/Commands/InspectCleanCommand');
       Server.registerGlobal(['AdonisInspect/Middleware/RequestLogger']);
       Route.group(() => {
         Route.get('/', 'InspectController.index');
