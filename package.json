@@ -1,6 +1,6 @@
 {
   "name": "@suhendra/adonis-inspect",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Inspect AdonisJS 4.1 requests",
   "main": "index.ts",
   "scripts": {

@@ -16,6 +16,7 @@ class RequestLogger {
     }
 
     const fs = require('fs');
+    const Config = use('Config');
     const inspectDir = use('inspect.dir');
     const manifestPath = `${inspectDir}/manifest.json`;
     const Database = use('Database');
@@ -31,44 +32,54 @@ class RequestLogger {
         post: request.post(),
         headers: request.headers()
       },
+      response: {
+        headers: [],
+        code: 0,
+        body: ''
+      },
       timestamp: start,
       queries: []
     }
 
-    Database.on('query', function (query) {
-      let q = query;
+    if (Config.get('inspect.collectors.query')) {
+      Database.on('query', function (query) {
+        let q = query;
 
-      q['start'] = new Date();
+        q['start'] = new Date();
 
-      logData.queries.push(q);
-    });
+        logData.queries.push(q);
+      });
 
-    Database.on('query-response', function (res, query) {
-      let idx = logData.queries.findIndex(q => q['__knexQueryUid'] === query['__knexQueryUid']);
-      let q = logData.queries[idx];
+      Database.on('query-response', function (res, query) {
+        let idx = logData.queries.findIndex(q => q['__knexQueryUid'] === query['__knexQueryUid']);
+        let q = logData.queries[idx];
 
-      q['end'] = new Date();
-      q['duration'] = q['end'] - q['start'];
-      q['response'] = query.response[0] || null;
+        q['end'] = new Date();
+        q['duration'] = q['end'] - q['start'];
+        q['response'] = query.response[0] || null;
 
-      logData.queries[idx] = q;
-    });
+        logData.queries[idx] = q;
+      });
+    }
 
     await next();
 
-    let responseBody = response.lazyBody.content;
-    let responseStr = responseBody;
+    if (Config.get('inspect.collectors.response')) {
+      let responseBody = response.lazyBody.content;
+      let responseStr = responseBody;
 
-    if (responseBody instanceof Error) {
-      responseStr = responseBody.message.toString();
+      if (responseBody instanceof Error || (responseBody && responseBody.status && responseBody.status === 'error')) {
+        responseStr = responseBody.message.toString();
+      }
+
+      logData['response'] = {
+        headers: response.response.headers,
+        code: response.response.statusCode,
+        body: responseStr
+      }
     }
 
     logData['duration'] = new Date() - start;
-    logData['response'] = {
-      headers: response.response.headers,
-      code: response.response.statusCode,
-      body: responseStr
-    }
 
     let manifest = {
       requests: []

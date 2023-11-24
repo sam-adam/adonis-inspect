@@ -4,5 +4,9 @@ const Env = use('Env');
 
 module.exports = {
   enabled: Env.get('INSPECT_ENABLED', false),
-  dir: 'storage/inspect'
+  dir: 'storage/inspect',
+  collectors: {
+    response: true,
+    query: true
+  }
 };

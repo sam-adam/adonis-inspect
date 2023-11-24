@@ -33,6 +33,15 @@ Visit `<app_url>/_inspect` to view the lists of requests, e.g: `http://localhost
 
 If on dev, prevent reload everytime new json file created by ignoring the used directory, e.g: `adonis serve --dev --ignore=storage`.
 
+#### Collectors
+
+Disable / enable collectors by config in `config/inspect.js`.
+
+Currently supported collectors:
+
+- Query
+- Response
+
 #### Cleaning Up
 
-Run ace command `adonis inspect:clean`
+Run ace command `adonis ins
